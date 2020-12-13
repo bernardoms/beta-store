@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# Mongo Volume
+/mongo-volume
+
 # production
 /build
 
