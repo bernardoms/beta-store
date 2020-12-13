@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILE:stg}
+
+app:
+  jwtSecret: ${JWT_SECRET:asdasd}
+  jwtExpirationInMs: 60000
