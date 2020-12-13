@@ -35,12 +35,14 @@ context('Create Product', () => {
 
         after(() => {
             //CLEANING TEST DATA
-            cy.request("DELETE", "http://localhost:8080/v1/products/1234")
+            cy.request("DELETE", "https://beta-store-product-api.herokuapp.com/v1/products/1234")
         })
 
         it("should login redirect to add product and create a product", () => {
             cy.visit('http://localhost:3000')
-    
+            
+            cy.intercept('**/v1/products').as('postProduct');
+
             cy.get('a[href="/login"]').click()
             cy.get('input[name="username"]').type('test')
             cy.get('input[name="password"]').type('test')
@@ -56,7 +58,9 @@ context('Create Product', () => {
             cy.get('input[name="price"]').type('19.99')
     
             cy.get('button').click()
-    
+
+            cy.wait('@postProduct', {timeout:50000});
+
             cy.get('div').contains('Product created with success!')
             
             cy.visit('http://localhost:3000/list')
